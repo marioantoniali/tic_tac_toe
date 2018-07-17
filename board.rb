@@ -13,9 +13,6 @@ class Board
     # Initialisation d'un tableau de 9 cases contenant chacun un BoardCase
     def initialize
         @cases = Array.new(9){BoardCase.new}
-        @victory1 = false
-        @victory2 = false
-        @victory3 = false
     end
     
     #Afficher la grille
