@@ -8,26 +8,17 @@ class Game
         @turn = Random.rand(0..1)       # choisit le premier joueur
         # initialise et récupère les noms des joueurs
         @players = []                  
-        puts " Veuillez entrer le nom du 1er joueur ( o ) :"
+        puts " Veuillez entrer le nom du 1er joueur ( #{Board::CASE_SYMBOL_1} ) :"
         name = gets.chomp.capitalize
-        @players.push(add_player(name,"o"))
-        puts " Veuillez entrer le nom du 2ème joueur ( x ) :"
+        @players.push(add_player(name,Board::CASE_SYMBOL_1))
+        puts " Veuillez entrer le nom du 2ème joueur ( #{Board::CASE_SYMBOL_2} ) :"
         name = gets.chomp.capitalize
-        @players.push(add_player(name,"x"))
-    end
-    
-    # définit l'alternance entre les joueurs tour par tour
-    def altern                       
-        if @turn == 0
-            @turn += 1
-            else @turn -= 1
-        end
+        @players.push(add_player(name,Board::CASE_SYMBOL_2))
     end
     
     # lance le jeu après avoir créé les 2 joueurs
     def action
         @board   = Board.new # Créé le tableau
-        continue = true #definition variable permettant de continuer le jeu tant que continue = true
 
         begin
             puts "----------- MENU ----------------"
@@ -39,12 +30,13 @@ class Game
             print "Votre choix : "
 
             item_menu = gets.chomp.to_i
+            continue = true #definition variable permettant de continuer le jeu tant que continue = true
             
             if item_menu == 1 # on joue 
                 
                 puts "----- Debut du Jeu ---- "    
                 begin 
-                    puts "#{@players[@turn].player_name}(#{@players[@turn].symbol}), choisis une case : " #annonce le joueur qui doit jouer en fonction du tour
+                    print "#{@players[@turn].player_name}(#{@players[@turn].symbol}), choisis une case : " #annonce le joueur qui doit jouer en fonction du tour
                     case_selected = gets.chomp.to_i 
                     
                     while case_selected < 1 || case_selected > 9 #le joueur doit choisir un nbre entre 1 et 9 sinon on renvoit le message en dessous
@@ -74,7 +66,7 @@ class Game
                         break
                     else
                         if no_problem == 1 #la case est disponible et le jeu n'est pas encore termine
-                           altern
+                            altern
                         else
                            puts "Cette case est déjà prise, essaie encore !"    
                         end
@@ -91,9 +83,21 @@ class Game
             else
               puts "Mauvaise commande, recommence !"  
             end
+               
         end while item_menu != 4
         
     end
+    
+    # Methodes privées        
+    private
+            
+     # définit l'alternance entre les joueurs tour par tour
+    def altern                       
+        if @turn == 0
+            @turn += 1
+            else @turn -= 1
+        end
+    end        
     
     def add_player(name,symbol)       # définit le joueur et son symbole
         player = Player.new(name,symbol)

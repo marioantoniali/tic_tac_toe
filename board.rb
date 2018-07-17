@@ -2,12 +2,20 @@ require_relative "board_case"
 
 class Board
     include Enumerable
+    
+    CASE_DEFAULT  = " "
+    CASE_SYMBOL_1 = "x"
+    CASE_SYMBOL_2 = "o"
+    
     #attributs getter et setter réunis
     attr_accessor :cases
     
     # Initialisation d'un tableau de 9 cases contenant chacun un BoardCase
     def initialize
         @cases = Array.new(9){BoardCase.new}
+        @victory1 = false
+        @victory2 = false
+        @victory3 = false
     end
     
     #Afficher la grille
@@ -40,38 +48,33 @@ class Board
         !@cases[6].is_empty && !@cases[7].is_empty && !@cases[8].is_empty
         
         # verifier si joueur avec symbol X a gagne
-        @victory1 =
-        @cases[0].symbol == "x" && @cases[1].symbol == "x" && @cases[2].symbol == "x" || #verifie une victoire Horizontale pour
-        @cases[3].symbol == "x" && @cases[4].symbol == "x" && @cases[5].symbol == "x" ||
-        @cases[6].symbol == "x" && @cases[7].symbol == "x" && @cases[8].symbol == "x" ||
-        
-        @cases[0].symbol == "x" && @cases[3].symbol == "x" && @cases[6].symbol == "x" || #verfier une victoire verticale pour
-        @cases[1].symbol == "x" && @cases[4].symbol == "x" && @cases[7].symbol == "x" ||
-        @cases[2].symbol == "x" && @cases[5].symbol == "x" && @cases[8].symbol == "x" ||
-        
-        @cases[0].symbol == "x" && @cases[4].symbol == "x" && @cases[8].symbol == "x" || #verifier una victoire diagonale
-        @cases[2].symbol == "x" && @cases[4].symbol == "x" && @cases[6].symbol == "x"
-        
-        @victory2 = @cases[0].symbol == "o" && @cases[1].symbol == "o" && @cases[2].symbol == "o" ||
-        @cases[3].symbol == "o" && @cases[4].symbol == "o" && @cases[5].symbol == "o" ||
-        @cases[6].symbol == "o" && @cases[7].symbol == "o" && @cases[8].symbol == "o" ||
-        
-        @cases[0].symbol == "o" && @cases[3].symbol == "o" && @cases[6].symbol == "o" ||
-        @cases[1].symbol == "o" && @cases[4].symbol == "o" && @cases[7].symbol == "o" ||
-        @cases[2].symbol == "o" && @cases[5].symbol == "o" && @cases[8].symbol == "o" ||
-        
-        @cases[0].symbol == "o" && @cases[4].symbol == "o" && @cases[8].symbol == "o" ||
-        @cases[2].symbol == "o" && @cases[4].symbol == "o" && @cases[6].symbol == "o"
+        @victory1 = is_the_end(CASE_SYMBOL_1)
+            
+        # verifier si joueur avec symbol 0 a gagne
+        @victory2 = is_the_end(CASE_SYMBOL_2)
 
-        
         return @victory1 || @victory2 || @victory3
+    end
+    
+    def is_the_end(symbol)
+     return @cases[0].symbol == symbol && @cases[1].symbol == symbol && @cases[2].symbol == symbol || #verifie une victoire Horizontale pour
+        @cases[3].symbol == symbol && @cases[4].symbol == symbol && @cases[5].symbol == symbol ||
+        @cases[6].symbol == symbol && @cases[7].symbol == symbol && @cases[8].symbol == symbol ||
+        
+        @cases[0].symbol == symbol && @cases[3].symbol == symbol && @cases[6].symbol == symbol || #verfier une victoire verticale pour
+        @cases[1].symbol == symbol && @cases[4].symbol == symbol && @cases[7].symbol == symbol ||
+        @cases[2].symbol == symbol && @cases[5].symbol == symbol && @cases[8].symbol == symbol ||
+        
+        @cases[0].symbol == symbol && @cases[4].symbol == symbol && @cases[8].symbol == symbol || #verifier una victoire diagonale
+        @cases[2].symbol == symbol && @cases[4].symbol == symbol && @cases[6].symbol == symbol
+       
     end
     
     # Renvoie le symbole du gagant, vide sinon
     def get_symbole_winner        
-        return "x" if @victory1
-        return "o" if @victory2
-        return "" 
+        return CASE_SYMBOL_1 if @victory1
+        return CASE_SYMBOL_2 if @victory2
+        return CASE_DEFAULT 
     end    
 end
 
