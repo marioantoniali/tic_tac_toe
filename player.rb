@@ -1,11 +1,12 @@
-class Player #Class player defines a class for the players
+#Class player defines a class for the players
+class Player 
 
-attr_accessor :player_name, :symbol
+ # attributs en lecture seulement    
+ attr_reader :player_name, :symbol
 
 	def initialize(player_name, symbol)
 		@player_name = player_name
 		@symbol = symbol
 	end
-
 	
 end
