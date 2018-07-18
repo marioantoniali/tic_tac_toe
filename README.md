@@ -26,10 +26,9 @@ Le jeu vous propose le menu suivant :
 - "Tape 4 pour sortir du jeu"
 
 ## qui commence ?
-C'est le hasard qui va decider de qui va jouer en 1er
+C'est le hasard qui va décider de qui va jouer en 1er
 
 ## quand le jeu se termine
 Le jeu se termine si :
 - un des joueurs gagne la partie
 - toutes les cases ont été séléctionnées
-
